@@ -43,7 +43,7 @@ RLab::RLab()
  */
 void RLab::ledOn(byte pos)
 {
-    if (pos >= 0 && pos <= 8)
+    if (pos >= 0 && pos < 8)
     {
         bitSet(this->ledState, pos);
         this->updateShiftReg();
@@ -57,7 +57,7 @@ void RLab::ledOn(byte pos)
  */
 void RLab::ledOff(byte pos)
 {
-    if (pos >= 0 && pos <= 8)
+    if (pos >= 0 && pos < 8)
     {
         bitClear(this->ledState, pos);
         this->updateShiftReg();
@@ -71,7 +71,7 @@ void RLab::ledOff(byte pos)
  */
 void RLab::ledToggle(byte pos)
 {
-    if (pos >= 0 && pos <= 8)
+    if (pos >= 0 && pos < 8)
     {
         this->ledState ^= 1 << pos;
         this->updateShiftReg();
