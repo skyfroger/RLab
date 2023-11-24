@@ -23,6 +23,17 @@ RLab::RLab()
 
     // изначально все номерные светодиоды выключены
     this->ledState = 0b00000000;
+
+    /*
+    Описание состояния тройки светодиодов.
+    Меняем значение битов - включаем и выключаем
+    светодиоды:
+                RYG
+                000
+    Младший бит - зелёный, средний - жёлтый,
+    старший - красный.
+    */
+    this->colorLedState = 0b000;
 }
 
 /**
@@ -74,7 +85,14 @@ void RLab::ledToggle(byte pos)
  */
 void RLab::ledOn(ColoredLED color)
 {
-    digitalWrite(color, HIGH);
+    /*
+    5 - номер пина зелёного светодиода
+    Вычитая 5 из номера пина получаем
+    номер бита, который нужно изменить
+    */
+    bitSet(this->colorLedState, color - 5);
+
+    this->updateColorLED();
 }
 
 /**
@@ -84,7 +102,33 @@ void RLab::ledOn(ColoredLED color)
  */
 void RLab::ledOff(ColoredLED color)
 {
-    digitalWrite(color, LOW);
+    bitClear(this->colorLedState, color - 5);
+
+    this->updateColorLED();
+}
+
+/**
+ * @brief Переключение цветного светодиода
+ *
+ * @param color название цвета
+ */
+void RLab::ledToggle(ColoredLED color)
+{
+    /*
+    С помощью XOR переключаем нужный бит
+    */
+    this->colorLedState ^= 1 << (color - 5);
+    this->updateColorLED();
+}
+
+/**
+ * @brief Обновление остояния трёх светодиодов
+ */
+void RLab::updateColorLED()
+{
+    digitalWrite(LAB_GREEN_LED, bitRead(this->colorLedState, 0));
+    digitalWrite(LAB_YELLOW_LED, bitRead(this->colorLedState, 1));
+    digitalWrite(LAB_RED_LED, bitRead(this->colorLedState, 2));
 }
 
 /**
@@ -118,6 +162,13 @@ void RLab::updateShiftReg()
     shiftOut(LAB_DATA, LAB_CLK, MSBFIRST, this->ledState);
 }
 
+/**
+ * @brief Чтение показаний датчика
+ *
+ * @param sensor название датчика
+ * @param raw возвращать сырое значение?
+ * @return int значение с датчика
+ */
 int RLab::readSensor(Sensor sensor, bool raw = false)
 {
     int rawValue = analogRead(sensor);

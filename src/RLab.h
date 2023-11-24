@@ -32,19 +32,22 @@ enum Sensor
 class RLab
 {
 public:
-    RLab();                   // конструктор
-    void ledOn(byte pos);     // включение светодиода под номером pos
-    void ledOff(byte pos);    // выключение светодиода под номером pos
-    void ledToggle(byte pos); // переключение светодиода
-    void ledOn(ColoredLED color);
-    void ledOff(ColoredLED color);
-    bool isPressed(byte button); // состояние кнопок
+    RLab();                           // конструктор
+    void ledOn(byte pos);             // включение светодиода под номером pos
+    void ledOff(byte pos);            // выключение светодиода под номером pos
+    void ledToggle(byte pos);         // переключение светодиода
+    void ledOn(ColoredLED color);     // включение цветного LED
+    void ledOff(ColoredLED color);    // выключение цветного LED
+    void ledToggle(ColoredLED color); // переключение цветного LED
+    bool isPressed(byte button);      // состояние кнопок
 
     int readSensor(Sensor s, bool raw = false);
 
 private:
     byte ledState;         // значения на выходе сдвигового регистра
+    byte colorLedState;    // состояние тройки цветных светодиодов
     void updateShiftReg(); // обновление состояния регистра
+    void updateColorLED(); // обновление состояния тройки светодиодов
 };
 
 #endif
