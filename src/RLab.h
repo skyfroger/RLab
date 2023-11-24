@@ -3,13 +3,6 @@
 
 #include "Arduino.h"
 
-// пины для кнопок
-#define BUTTON1 8
-#define BUTTON2 9
-#define BUTTON3 10
-#define BUTTON4 12
-#define BUTTON5 11
-
 // пины для разноцветных светодиодов
 #define GREEN_LED 5
 #define YELLOW_LED 6
@@ -23,10 +16,11 @@
 class RLab
 {
 public:
-    RLab();                  // конструктор
-    void ledOn(int pos);     // включение светодиода под номером pos
-    void ledOff(int pos);    // выключение светодиода под номером pos
-    void ledToggle(int pos); // переключение светодиода
+    RLab();                   // конструктор
+    void ledOn(byte pos);     // включение светодиода под номером pos
+    void ledOff(byte pos);    // выключение светодиода под номером pos
+    void ledToggle(byte pos); // переключение светодиода
+    bool isPressed(byte button);
 
 private:
     byte ledState;         // значения на выходе сдвигового регистра

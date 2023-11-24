@@ -28,7 +28,7 @@ RLab::RLab()
  *
  * @param pos номер светодиода
  */
-void RLab::ledOn(int pos)
+void RLab::ledOn(byte pos)
 {
     if (pos >= 0 && pos <= 8)
     {
@@ -42,7 +42,7 @@ void RLab::ledOn(int pos)
  *
  * @param pos номер светодиода
  */
-void RLab::ledOff(int pos)
+void RLab::ledOff(byte pos)
 {
     if (pos >= 0 && pos <= 8)
     {
@@ -56,7 +56,7 @@ void RLab::ledOff(int pos)
  *
  * @param pos номер светодиода
  */
-void RLab::ledToggle(int pos)
+void RLab::ledToggle(byte pos)
 {
     if (pos >= 0 && pos <= 8)
     {
@@ -65,6 +65,31 @@ void RLab::ledToggle(int pos)
     }
 }
 
+/**
+ * @brief Считать состояние кнопки
+ *
+ * @param button номер кноки
+ * @return true кнопка нажата
+ * @return false кнопка не нажата
+ */
+bool RLab::isPressed(byte button)
+{
+    /*
+    Пин первой кнопки - 8. У всех следующих кнопок
+    номер пина на 1 больше. Берём номер кнопки,
+    прибавляем 7 и получаем номер пина выбранно кнопки.
+    */
+    if (button > 0 && button < 6)
+    {
+        return digitalRead(button + 7);
+    }
+
+    return false;
+}
+
+/**
+ * @brief Обновление значений в регистре сдвига
+ */
 void RLab::updateShiftReg()
 {
     shiftOut(DATA, CLK, MSBFIRST, this->ledState);
