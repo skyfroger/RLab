@@ -26,7 +26,10 @@ enum Sensor
 {
     POT = A7,
     MIC = A3,
-    LIGHT = A4
+    LIGHT = A4,
+    ANALOG0 = A0,
+    ANALOG1 = A1,
+    DIGITAL = 13
 };
 
 class RLab

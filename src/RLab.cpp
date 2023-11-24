@@ -171,8 +171,13 @@ void RLab::updateShiftReg()
  */
 int RLab::readSensor(Sensor sensor, bool raw = false)
 {
+    // чтение цифрового датчика из набора расширений
+    if (sensor == DIGITAL)
+        return digitalRead(sensor);
+
     int rawValue = analogRead(sensor);
 
+    // переворачиваем знаение, полученное от потенциометра
     if (sensor == POT)
         rawValue = abs(rawValue - 1023);
 
