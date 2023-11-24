@@ -4,20 +4,29 @@
 #include "Arduino.h"
 
 // пины для разноцветных светодиодов
-#define GREEN_LED 5
-#define YELLOW_LED 6
-#define RED_LED 7
+#define LAB_GREEN_LED 5
+#define LAB_YELLOW_LED 6
+#define LAB_RED_LED 7
 
 // пины сдвигового регистра
-#define DATA 2   // пин данных
-#define CLK 4    // пин синхронизации
-#define RESET 19 // пин сброса
+#define LAB_DATA 2   // пин данных
+#define LAB_CLK 4    // пин синхронизации
+#define LAB_RESET 19 // пин сброса
+
+#define LAB_POT A7
 
 enum ColoredLED
 {
-    GREEN = GREEN_LED,
-    YELLOW = YELLOW_LED,
-    RED = RED_LED
+    GREEN = LAB_GREEN_LED,
+    YELLOW = LAB_YELLOW_LED,
+    RED = LAB_RED_LED
+};
+
+enum Sensor
+{
+    POT = A7,
+    MIC = A3,
+    LIGHT = A4
 };
 
 class RLab
@@ -30,6 +39,8 @@ public:
     void ledOn(ColoredLED color);
     void ledOff(ColoredLED color);
     bool isPressed(byte button); // состояние кнопок
+
+    int readSensor(Sensor s, bool raw = false);
 
 private:
     byte ledState;         // значения на выходе сдвигового регистра

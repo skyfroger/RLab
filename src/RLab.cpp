@@ -7,19 +7,19 @@
 RLab::RLab()
 {
     // пини разноцветных светодиодов настраиваем на выход
-    pinMode(GREEN_LED, OUTPUT);
-    pinMode(YELLOW_LED, OUTPUT);
-    pinMode(RED_LED, OUTPUT);
+    pinMode(LAB_GREEN_LED, OUTPUT);
+    pinMode(LAB_YELLOW_LED, OUTPUT);
+    pinMode(LAB_RED_LED, OUTPUT);
 
     // пины сдвигового регистра настраиваем на выход
-    pinMode(DATA, OUTPUT);
-    pinMode(CLK, OUTPUT);
-    pinMode(RESET, OUTPUT);
+    pinMode(LAB_DATA, OUTPUT);
+    pinMode(LAB_CLK, OUTPUT);
+    pinMode(LAB_RESET, OUTPUT);
 
     // контакт сброса у регистра инвертирован,
     // значит нужно подавать 1, чтобы регистр
     // постоянно не обнулялся
-    digitalWrite(RESET, HIGH);
+    digitalWrite(LAB_RESET, HIGH);
 
     // изначально все номерные светодиоды выключены
     this->ledState = 0b00000000;
@@ -114,6 +114,18 @@ bool RLab::isPressed(byte button)
  */
 void RLab::updateShiftReg()
 {
-    digitalWrite(RESET, HIGH);
-    shiftOut(DATA, CLK, MSBFIRST, this->ledState);
+    digitalWrite(LAB_RESET, HIGH);
+    shiftOut(LAB_DATA, LAB_CLK, MSBFIRST, this->ledState);
+}
+
+int RLab::readSensor(Sensor sensor, bool raw = false)
+{
+    int rawValue = analogRead(sensor);
+
+    if (sensor == POT)
+        rawValue = abs(rawValue - 1023);
+
+    if (raw)
+        return rawValue;
+    return map(rawValue, 0, 1023, 0, 100);
 }
