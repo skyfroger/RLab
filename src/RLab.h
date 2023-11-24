@@ -13,6 +13,13 @@
 #define CLK 4    // пин синхронизации
 #define RESET 19 // пин сброса
 
+enum ColoredLED
+{
+    GREEN = GREEN_LED,
+    YELLOW = YELLOW_LED,
+    RED = RED_LED
+};
+
 class RLab
 {
 public:
@@ -20,7 +27,9 @@ public:
     void ledOn(byte pos);     // включение светодиода под номером pos
     void ledOff(byte pos);    // выключение светодиода под номером pos
     void ledToggle(byte pos); // переключение светодиода
-    bool isPressed(byte button);
+    void ledOn(ColoredLED color);
+    void ledOff(ColoredLED color);
+    bool isPressed(byte button); // состояние кнопок
 
 private:
     byte ledState;         // значения на выходе сдвигового регистра

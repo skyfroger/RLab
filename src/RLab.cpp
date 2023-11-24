@@ -6,10 +6,12 @@
  */
 RLab::RLab()
 {
+    // пини разноцветных светодиодов настраиваем на выход
     pinMode(GREEN_LED, OUTPUT);
     pinMode(YELLOW_LED, OUTPUT);
     pinMode(RED_LED, OUTPUT);
 
+    // пины сдвигового регистра настраиваем на выход
     pinMode(DATA, OUTPUT);
     pinMode(CLK, OUTPUT);
     pinMode(RESET, OUTPUT);
@@ -66,6 +68,26 @@ void RLab::ledToggle(byte pos)
 }
 
 /**
+ * @brief Включение цветного светодиода
+ *
+ * @param color цвет
+ */
+void RLab::ledOn(ColoredLED color)
+{
+    digitalWrite(color, HIGH);
+}
+
+/**
+ * @brief Выключение цветного светодиода
+ *
+ * @param color цвет
+ */
+void RLab::ledOff(ColoredLED color)
+{
+    digitalWrite(color, LOW);
+}
+
+/**
  * @brief Считать состояние кнопки
  *
  * @param button номер кноки
@@ -92,5 +114,6 @@ bool RLab::isPressed(byte button)
  */
 void RLab::updateShiftReg()
 {
+    digitalWrite(RESET, HIGH);
     shiftOut(DATA, CLK, MSBFIRST, this->ledState);
 }
