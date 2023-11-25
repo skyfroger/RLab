@@ -13,7 +13,7 @@
 #define LAB_CLK 4    // пин синхронизации
 #define LAB_RESET 19 // пин сброса
 
-#define LAB_POT A7
+#define LAB_BUZZER 3
 
 enum ColoredLED
 {
@@ -44,13 +44,19 @@ public:
     void ledToggle(ColoredLED color); // переключение цветного LED
     bool isPressed(byte button);      // состояние кнопок
 
-    int readSensor(Sensor s, bool raw = false);
+    int readSensor(Sensor s, bool raw = false); // чтение значений с датчиков
+
+    void playNote(byte note, int duration = 300); // проигрывание ноты
 
 private:
     byte ledState;         // значения на выходе сдвигового регистра
     byte colorLedState;    // состояние тройки цветных светодиодов
     void updateShiftReg(); // обновление состояния регистра
     void updateColorLED(); // обновление состояния тройки светодиодов
+
+    // массив нот (частоты в Hz)
+    int _notes[25] = {131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233,
+                      247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494, 523};
 };
 
 #endif

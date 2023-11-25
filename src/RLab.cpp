@@ -185,3 +185,18 @@ int RLab::readSensor(Sensor sensor, bool raw = false)
         return rawValue;
     return map(rawValue, 0, 1023, 0, 100);
 }
+
+/**
+ * @brief Проигрывание ноты
+ *
+ * @param note номер ноты
+ * @param duration продолжительность в миллисекундах
+ */
+void RLab::playNote(byte note, int duration = 300)
+{
+    if (note > 47 && note < 73)
+    {
+        tone(LAB_BUZZER, this->_notes[note - 48], duration);
+        delay(duration); // пауза для проигрывания ноты до конца
+    }
+}
