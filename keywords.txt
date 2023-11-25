@@ -6,13 +6,28 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-RLab	KEYWORD1	RPulse
+RLab	KEYWORD1	RLab
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-
+ledOn       KEYWORD2
+ledOff      KEYWORD2
+ledToggle   KEYWORD2
+isPressed   KEYWORD2
+readSensor  KEYWORD2
+playNote    KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
+
+GREEN   LITERAL1
+YELLOW  LITERAL1
+RED     LITERAL1
+POT     LITERAL1
+MIC     LITERAL1
+LIGHT   LITERAL1
+ANALOG0 LITERAL1
+ANALOG1 LITERAL1
+DIGITAL LITERAL1
